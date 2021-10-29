@@ -381,7 +381,7 @@ public class RCTMqtt implements MqttCallbackExtended {
             message.setQos(qos);
             message.setRetained(retain);
             client.publish(topic, message);
-        } catch (UnsupportedEncodingException | MqttException e) {
+        } catch (MqttException e) {
             e.printStackTrace();
         }
     }
