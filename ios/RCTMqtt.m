@@ -148,11 +148,12 @@ RCT_EXPORT_METHOD(unsubscribe:(nonnull NSString *) clientRef topic:(NSString *)t
     [[[self clients] objectForKey:clientRef] unsubscribe:topic];
 }
 
-RCT_EXPORT_METHOD(publish:(nonnull NSString *) clientRef topic:(NSString *)topic data:(NSString*)data qos:(nonnull NSNumber *)qos retain:(BOOL)retain) {
+RCT_EXPORT_METHOD(publish:(nonnull NSString *) clientRef topic:(NSString *)topic data:(NSString*)data qos:(nonnull NSNumber *)qos retain:(BOOL)retain base64:(BOOL)base64) {
     [[[self clients] objectForKey:clientRef] publish:topic
                                                 data:[data dataUsingEncoding:NSUTF8StringEncoding]
                                                  qos:qos
-                                              retain:retain];
+                                              retain:retain
+                                              base64:base64];
     
 }
 

@@ -236,8 +236,12 @@
     [self.manager setSubscriptions:subscriptions];
 }
 
-- (void) publish:(NSString *) topic data:(NSData *)data qos:(NSNumber *)qos retain:(BOOL) retain {
-    [self.manager sendData:data topic:topic qos:[qos intValue] retain:retain];
+- (void) publish:(NSString *) topic data:(NSData *)data qos:(NSNumber *)qos retain:(BOOL) retain base64:(BOOL) base64 {
+    NSData *payload = data;
+    if (base64) {
+        payload = [[NSData alloc] initWithBase64EncodedData:data options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    }
+    [self.manager sendData:payload topic:topic qos:[qos intValue] retain:retain];
 }
 
 - (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained {
