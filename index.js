@@ -1,69 +1,57 @@
 import { NativeEventEmitter, NativeModules } from "react-native";
 
-import { QoS } from ".";
-
 const Mqtt = NativeModules.Mqtt;
 
-const MqttClient = function (options, clientRef) {
-  this.options = options;
-  this.clientRef = clientRef;
-  this.eventHandler = {};
+class MqttClient {
+  constructor(options, clientRef) {
+    this.options = options;
+    this.clientRef = clientRef;
+    this.eventHandler = {};
 
-  this.dispatchEvent = function (data) {
-    if (data && data.clientRef == this.clientRef && data.event) {
-      if (this.eventHandler[data.event]) {
-        this.eventHandler[data.event](data.message);
+    this.dispatchEvent = function (data) {
+      if (data && data.clientRef == this.clientRef && data.event) {
+        if (this.eventHandler[data.event]) {
+          this.eventHandler[data.event](data.message);
+        }
       }
-    }
-  };
-};
-
-MqttClient.prototype.on = function (event, callback) {
-  console.log("setup event", event);
-  this.eventHandler[event] = callback;
-};
-
-MqttClient.prototype.connect = function () {
-  Mqtt.connect(this.clientRef);
-};
-
-MqttClient.prototype.disconnect = function () {
-  Mqtt.disconnect(this.clientRef);
-};
-
-MqttClient.prototype.subscribe = function (topic: string, qos: QoS) {
-  Mqtt.subscribe(this.clientRef, topic, qos);
-};
-
-MqttClient.prototype.unsubscribe = function (topic: string) {
-  Mqtt.unsubscribe(this.clientRef, topic);
-};
-
-MqttClient.prototype.publish = function (
-  topic: string,
-  payload: string,
-  qos: QoS,
-  retain: boolean,
-  base64: boolean
-) {
-  Mqtt.publish(this.clientRef, topic, payload, qos, retain, base64);
-};
-
-MqttClient.prototype.reconnect = function () {
-  Mqtt.reconnect(this.clientRef);
-};
-
-MqttClient.prototype.isConnected = function () {
-  return Mqtt.isConnected(this.clientRef);
-};
-
-MqttClient.prototype.getTopics = function () {
-  return Mqtt.getTopics(this.clientRef);
-};
-
-MqttClient.prototype.isSubbed = function (topic: string) {
-  return Mqtt.isSubbed(this.clientRef, topic);
-};
+    };
+  }
+  on(event, callback) {
+    console.log("setup event", event);
+    this.eventHandler[event] = callback;
+  }
+  connect() {
+    Mqtt.connect(this.clientRef);
+  }
+  disconnect() {
+    Mqtt.disconnect(this.clientRef);
+  }
+  subscribe(topic, qos) {
+    Mqtt.subscribe(this.clientRef, topic, qos);
+  }
+  unsubscribe(topic) {
+    Mqtt.unsubscribe(this.clientRef, topic);
+  }
+  publish(topic,
+    payload,
+    qos,
+    retain,
+    base64) {
+    Mqtt.publish(this.clientRef, topic, payload, qos, retain, base64);
+  }
+  reconnect() {
+    Mqtt.reconnect(this.clientRef);
+  }
+  isConnected() {
+    return Mqtt.isConnected(this.clientRef);
+  }
+  getTopics() {
+    return Mqtt.getTopics(this.clientRef);
+  }
+  isSubbed(topic) {
+    return Mqtt.isSubbed(this.clientRef, topic);
+  }
+}
 
 const emitter = new NativeEventEmitter(Mqtt);
 
