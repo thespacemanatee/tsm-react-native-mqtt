@@ -1,19 +1,13 @@
-[![npm](https://img.shields.io/npm/dt/react-native-mqtt.svg)]()
-
-## Announcements:
-
-No longer actively maintained.
-Looking for maintainers.
-
 ## Description
 
-A [react-native](https://github.com/facebook/react-native) mqtt client module that works
+A react-native-mqtt fork that allows Android clients to send base64 strings in byte arrays.
 
 ## MQTT Features (inherited from the native MQTT framework)
 * Uses [MQTT Framework](https://github.com/ckrey/MQTT-Client-Framework) for IOS, [Paho MQTT Client](https://eclipse.org/paho/clients/android/) for Android
-* Supports both IOS and Android
+* Full Android support
+* Partial iOS support
 * SSL/TLS
-* Native library, support mqtt over tcp (forget websockets, we're on **mobile**)
+* Native library, supports MQTT over TCP (forget websockets, we're on **mobile**)
 
 
 ## Getting started
@@ -22,19 +16,19 @@ A [react-native](https://github.com/facebook/react-native) mqtt client module th
 
 #### Step 1:
 ```bash
-npm install sp-react-native-mqtt --save
+npm install tsm-react-native-mqtt --save
 ```
 
 or
 
 ```bash
-yarn add sp-react-native-mqtt
+yarn add tsm-react-native-mqtt
 ```
 
 #### Step 2: (Skip this step if you are using RN 0.60 or above as the module will be auto-linked)
 
 ```bash
-react-native link sp-react-native-mqtt
+react-native link tsm-react-native-mqtt
 ```
 
 
@@ -47,7 +41,7 @@ Add `pod 'MQTTClient'` to your podfile and `pod install`
 <summary>Alternatively you can manually link the library on iOS (click to expand)</summary>
 
 In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-* Go to `node_modules` ➜ `sp-react-native-mqtt` and add `RCTMqtt.xcodeproj`
+* Go to `node_modules` ➜ `tsm-react-native-mqtt` and add `RCTMqtt.xcodeproj`
 * In XCode, in the project navigator, select your project. Add `libRCTmqtt.a` and `libicucore.tbd` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 * Click `RCTMqtt.xcodeproj` in the project navigator and go the `Build Settings` tab. Make sure 'All' is toggled on (instead of 'Basic'). In the `Search Paths` section, look for `Header Search Paths` and make sure it contains both `$(SRCROOT)/../../react-native/React` - mark  as `recursive`.
 
@@ -70,8 +64,8 @@ Don't forget to include `import com.tuanpm.RCTMqtt.*;` with the other imports at
 * Append the following lines to `android/settings.gradle` before `include ':app'`:
 
 ```
-include ':sp-react-native-mqtt'
-project(':sp-react-native-mqtt').projectDir = new File(rootProject.projectDir,  '../node_modules/sp-react-native-mqtt/android')
+include ':tsm-react-native-mqtt'
+project(':tsm-react-native-mqtt').projectDir = new File(rootProject.projectDir,  '../node_modules/tsm-react-native-mqtt/android')
 
 ```
 
@@ -79,7 +73,7 @@ project(':sp-react-native-mqtt').projectDir = new File(rootProject.projectDir,  
 - Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 
 ```
-implementation ':sp-react-native-mqtt'
+implementation ':tsm-react-native-mqtt'
 ```
 
 
@@ -87,7 +81,7 @@ implementation ':sp-react-native-mqtt'
 ## Usage
 
 ```javascript
-import MQTT from 'sp-react-native-mqtt';
+import MQTT from 'tsm-react-native-mqtt';
 
 /* create mqtt client */
 MQTT.createClient({
@@ -151,22 +145,15 @@ MQTT.createClient({
   * `topic`: *string* `"/data"`
 
 ## Todo
-
-* [ ] Use WeakReference for timer
-* [ ] Add disconnecting event
-* [ ] Add async versions of:
- - [ ] connect
- - [ ] subscribe
- - [ ] disconnect
- - [ ] unsubscribe
-
-* [X] Allow for multi nested domains ie: na.est.example.com
-* [X] Add isConnected implementation for iOS
-* [X] Add isSubbed for iOS & Android
-* [X] Add getTopics for iOS & Android
-
+* [ ] byte array support for iOS
 ## LICENSE
 
 ```text
-INHERIT FROM MQTT LIBRARY (progress)
+Copyright 2021 Chong Chee Kit
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```

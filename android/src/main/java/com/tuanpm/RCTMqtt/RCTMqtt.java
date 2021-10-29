@@ -1,16 +1,17 @@
 package com.tuanpm.RCTMqtt;
 
 import android.support.annotation.NonNull;
+import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableArray;
-import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.RCTNativeAppEventEmitter;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -31,11 +32,6 @@ import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
 import javax.net.ssl.SSLContext;
@@ -374,9 +370,13 @@ public class RCTMqtt implements MqttCallbackExtended {
      * @param retain
      */
     public void publish(@NonNull final String topic, @NonNull final String payload, final int qos,
-            final boolean retain) {
+            final boolean retain, final boolean base64) {
         try {
-            byte[] encodedPayload = payload.getBytes("UTF-8");
+            byte[] finalPayload = payload.getBytes();
+            if (base64) {
+                finalPayload = Base64.decode(finalPayload, Base64.DEFAULT);
+            }
+            byte[] encodedPayload = finalPayload;
             MqttMessage message = new MqttMessage(encodedPayload);
             message.setQos(qos);
             message.setRetained(retain);
