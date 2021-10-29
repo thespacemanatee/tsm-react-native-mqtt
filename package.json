@@ -15,7 +15,11 @@
     "reactnative",
     "iot"
   ],
-  "author": "Chong Chee Kit <cheekit.chong98@gmail.com> (https://www.linkedin.com/in/chee-kit)",
+  "author": {
+    "name": "Chong Chee Kit",
+    "email": "cheekit.chong98@gmail.com",
+    "url": "https://www.linkedin.com/in/chee-kit"
+  },
   "contributors": [
     "Yury Korolev <yury.korolev@gmail.com> (http://anjlab.com)",
     "Alexander Ustinov <rusfearuth@gmail.com> (http://github.com/rusfearuth)",
