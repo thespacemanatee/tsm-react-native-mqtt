@@ -104,7 +104,7 @@ MQTT.createClient({
   client.on('connect', function() {
     console.log('connected');
     client.subscribe('/data', 0);
-    client.publish('/data', "test", 0, false);
+    client.publish('/data', "test", 0, false, true);
   });
 
   client.connect();
@@ -136,7 +136,7 @@ MQTT.createClient({
   * `connect`: begin connection
   * `disconnect`: disconnect
   * `subscribe(topic, qos)`
-  * `publish(topic, payload, qos, retain)`
+  * `publish(topic, payload, qos, retain, base64)`
 
 * `message`
   * `retain`: *boolean* `false`
@@ -145,7 +145,7 @@ MQTT.createClient({
   * `topic`: *string* `"/data"`
 
 ## Todo
-* [ ] byte array support for iOS
+* [x] byte array support for iOS
 ## LICENSE
 
 ```text
